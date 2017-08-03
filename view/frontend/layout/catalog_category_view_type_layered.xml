@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<script src="Codilar_LayeredNavigation::js/script.js"/>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+        <link rel="stylesheet" href="/resources/demos/style.css"/>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <css src="Codilar_LayeredNavigation::css/loader.css" />
+	</head>
+    <body>
+        <referenceBlock name="catalog.leftnav">
+            <block class="Codilar\LayeredNavigation\Block\Navigation\FilterRenderer" name="catalog.navigation.renderer" as="renderer" template="layer/filter.phtml"/>
+        </referenceBlock>
+        <referenceBlock name="catalogsearch.leftnav" remove="true"/>
+
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="cust-loader" template="Codilar_LayeredNavigation::loader.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

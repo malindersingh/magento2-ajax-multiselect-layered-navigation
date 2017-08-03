@@ -1,0 +1,46 @@
+<?php $_filters = $block->getParams() ?>
+<?php if (!empty($_filters)): ?>
+    <?php if(!(array_key_exists('price',$_filters) && sizeof($_filters) == 1)): ?>
+    <div class="cust-filter-current" data-mage-init='{"collapsible":{"openedState": "active", "collapsible": true, "active": false }}'>
+        <strong class="block-subtitle filter-current-subtitle"
+                role="heading"
+                aria-level="2"
+                data-role="title"
+                data-count="<?php echo count($_filters); ?>"><?php /* @escapeNotVerified */ echo __('Now Shopping by') ?></strong>
+        <ol class="items">
+            <?php foreach ($_filters as $label => $_filter): ?>
+                <?php if ($label !== 'price'):?>
+                <li class="item">
+                    <span class="filter-label"><?php echo $block->escapeHtml(__($label)); ?></span>
+                    <span class="filter-value">
+                        <?php
+                            foreach ($_filter as $filterValue):
+                        ?>
+                                <span class="filters-selected">
+                                    <?php echo $filterValue['label']; ?>
+                                    <span class="codilar_selected_filter_close" onclick='Codilar_LayeredNavigation.disableFilter("<?php echo $block->escapeHtml(__($label)); ?>","<?php echo $filterValue['value']; ?>")'> x</span>
+                                </span>
+                            <?php endforeach; ?>
+                    </span>
+                </li>
+            <?php endif;?>
+            <?php endforeach; ?>
+        </ol>
+        <div class="cust-block-actions cust-filter-actions">
+            <a href="javascript:Codilar_LayeredNavigation.disableAllFilters();" class="action clear filter-clear"><span>Clear All</span></a>
+        </div>
+    </div>
+        <?php endif;?>
+<?php endif; ?>
+<style>
+    .filter-value .filters-selected {
+        margin: 0 3px 3px 0;
+        padding: 3px;
+        border-radius: 10px;
+        background-color: #9b9b9b;
+        color: #fff;
+    }
+    .codilar_selected_filter_close {
+        cursor: pointer;
+    }
+</style>

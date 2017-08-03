@@ -1,0 +1,9 @@
+<?php
+$helper = $this->helper('Codilar\LayeredNavigation\Helper\Data');
+$enable = $helper->getConfig('codilar_layered/general/enable');
+?>
+<?php if ($enable): ?>
+<div class="cust-loader">
+    <img src="<?php echo $this->getViewFileUrl('Codilar_LayeredNavigation/images/load.gif');?>">
+</div>
+<?php endif; ?>

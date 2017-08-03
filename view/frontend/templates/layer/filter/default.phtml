@@ -1,0 +1,148 @@
+<?php
+/**
+ * Template for filter items block
+ *
+ * @var $block \Magento\LayeredNavigation\Block\Navigation\FilterRenderer
+ */
+?>
+<?php echo "<script>var filtersLoad = ".json_encode($_GET).";</script>" ?>
+<?php
+    $helper = $this->helper('Codilar\LayeredNavigation\Helper\Data');
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');//get current category
+    $enable = $helper->getConfig('codilar_layered/general/enable');
+?>
+<ol class="items">
+    <?php $sliderMaxPrice = (int)$block->getMaxPrice()+1;
+    $sliderMaxPrice = (string)$sliderMaxPrice;
+    $sliderMinPrice = $block->getMinPrice();
+    $priceFilter = $block->getAppliedPriceFilter();
+    if($priceFilter){
+        $sliderSelectedMinPrice = $priceFilter[0];
+        $sliderSelectedMaxPrice = $priceFilter[1];
+    }
+    else{
+        $sliderSelectedMinPrice = $sliderMinPrice;
+        $sliderSelectedMaxPrice = $sliderMaxPrice;
+
+    }
+    ?>
+    <?php if ($enable):?>
+    <?php foreach ($filterItems as $filterItem): ?>
+<!--        --><?php //var_dump($filterItem->getFilter()->getAttributeModel()->getAttributeMinPrice());?>
+        <?php if ($filterItem->getFilter()->getAttributeModel()->getAttributeCode() != 'price'):?>
+        <li class="item">
+            <?php if ($filterItem->getCount() > 0): ?>
+                <?php if (!$enable):?>
+                    <a href="<?php echo $block->escapeUrl($filterItem->getUrl()) ?>">
+                    <?php endif;?>
+<!--                --><?php //var_dump(array_keys($filterItem->getFilter()->getAttributeModel()->getData())); //echo $filterItem->getValue(); ?>
+                <?php //echo $filterItem->getFilter()->getAttributeModel()->getAttributeCode(); echo $filterItem->getValue();?>
+                        <?php if ($enable):?>
+                     <input type="checkbox" name="filter" class="codilar_layered_navigator_item" data-attribute-code="<?php echo $filterItem->getFilter()->getAttributeModel()->getAttributeCode()?>" data-attribute-value="<?php echo $filterItem->getValue()?>">
+                <?php endif;?>
+                    <span><?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?></span>
+                    <?php if ($this->helper('\Magento\Catalog\Helper\Data')->shouldDisplayProductCountOnLayer()): ?>
+                        <span class="count"><?php /* @escapeNotVerified */ echo $filterItem->getCount()?><span class="filter-count-label">
+                            <?php if ($filterItem->getCount() == 1):?> <?php /* @escapeNotVerified */ echo __('item')?><?php else:?> <?php /* @escapeNotVerified */ echo __('items') ?><?php endif;?></span></span>
+                    <?php endif; ?>
+                        <?php if (!$enable):?>
+                </a>
+                <?php endif;?>
+            <?php else:?>
+                <?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>
+                <?php if ($this->helper('\Magento\Catalog\Helper\Data')->shouldDisplayProductCountOnLayer()): ?>
+                    <span class="count"><?php /* @escapeNotVerified */ echo $filterItem->getCount()?><span class="filter-count-label">
+                        <?php if ($filterItem->getCount() == 1):?><?php /* @escapeNotVerified */ echo __('item')?><?php else:?><?php /* @escapeNotVerified */ echo __('items') ?><?php endif;?></span></span>
+                <?php endif; ?>
+            <?php endif; ?>
+        </li>
+
+    <?php
+        else: ?>
+    <li class="item">
+        <p>
+            <label for="amount"></label>
+            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;text-align: center;">
+        </p>
+
+        <div id="slider-range-cust"></div>
+    </li>
+    <?php
+        endif;
+        ?>
+    <?php endforeach ?>
+    <?php else: ?>
+        <?php foreach ($filterItems as $filterItem): ?>
+            <!--        --><?php //var_dump($filterItem->getFilter()->getAttributeModel()->getAttributeMinPrice());?>
+                <li class="item">
+                    <?php if ($filterItem->getCount() > 0): ?>
+                        <?php if (!$enable):?>
+                            <a href="<?php echo $block->escapeUrl($filterItem->getUrl()) ?>">
+                        <?php endif;?>
+                        <!--                --><?php //var_dump(array_keys($filterItem->getFilter()->getAttributeModel()->getData())); //echo $filterItem->getValue(); ?>
+                        <?php //echo $filterItem->getFilter()->getAttributeModel()->getAttributeCode(); echo $filterItem->getValue();?>
+                        <?php if ($enable):?>
+                            <input type="checkbox" name="filter" class="codilar_layered_navigator_item" data-attribute-code="<?php echo $filterItem->getFilter()->getAttributeModel()->getAttributeCode()?>" data-attribute-value="<?php echo $filterItem->getValue()?>">
+                        <?php endif;?>
+                        <span><?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?></span>
+                        <?php if ($this->helper('\Magento\Catalog\Helper\Data')->shouldDisplayProductCountOnLayer()): ?>
+                            <span class="count"><?php /* @escapeNotVerified */ echo $filterItem->getCount()?><span class="filter-count-label">
+                            <?php if ($filterItem->getCount() == 1):?> <?php /* @escapeNotVerified */ echo __('item')?><?php else:?> <?php /* @escapeNotVerified */ echo __('items') ?><?php endif;?></span></span>
+                        <?php endif; ?>
+                        <?php if (!$enable):?>
+                            </a>
+                        <?php endif;?>
+                    <?php else:?>
+                        <?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>
+                        <?php if ($this->helper('\Magento\Catalog\Helper\Data')->shouldDisplayProductCountOnLayer()): ?>
+                            <span class="count"><?php /* @escapeNotVerified */ echo $filterItem->getCount()?><span class="filter-count-label">
+                        <?php if ($filterItem->getCount() == 1):?><?php /* @escapeNotVerified */ echo __('item')?><?php else:?><?php /* @escapeNotVerified */ echo __('items') ?><?php endif;?></span></span>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </li>
+        <?php endforeach ?>
+    <?php endif; ?>
+</ol>
+<style type="text/css">
+    .filter-options-content a:hover {
+        background-color: inherit;
+    }
+    .page-with-filter .toolbar-amount {
+        display:none;
+    }
+    .filter-current {
+        display:none;
+    }
+    .cust-filter-current {
+        margin: 0;
+    }
+    .block-actions.filter-actions {
+        display: none;
+    }
+</style>
+
+<script type="text/javascript">
+    Codilar_LayeredNavigation.url = '<?php echo $this->getUrl('codilar_layerednavigation/filterdata/data'); ?>';
+//    jQuery('.filter-options-content .items div:not(:first-child)').hide();
+    category_id = '<?php echo $category->getId(); ?>';
+    Codilar_LayeredNavigation.enable = '<?php echo $enable; ?>';
+    jQuery( function() {
+        jQuery( "#slider-range-cust" ).slider({
+            range: true,
+            min: <?php echo $sliderMinPrice ?>,
+            max: <?php echo $sliderMaxPrice ?>,
+
+            values: [ "<?php echo $sliderSelectedMinPrice ?>","<?php echo $sliderSelectedMaxPrice ?>" ],
+            slide: function( event, ui ) {
+                jQuery( "#amount" ).val( "Rs." + ui.values[ 0 ] + " - Rs." + ui.values[ 1 ] );
+            },
+            stop: function( event, ui ) {
+                Codilar_LayeredNavigation.priceSlider(this,ui.values[ 0 ]+"-"+ui.values[ 1 ]);
+            },
+        });
+        jQuery( "#amount" ).val( "Rs." + jQuery( "#slider-range-cust" ).slider( "values", 0 ) +
+            " - Rs." + jQuery( "#slider-range-cust" ).slider( "values", 1 ) );
+    } );
+
+</script>
