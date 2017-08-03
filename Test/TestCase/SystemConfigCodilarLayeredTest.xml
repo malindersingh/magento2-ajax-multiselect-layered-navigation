@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/etc/variations.xsd">
+    <testCase name="Codilar\LayeredNavigation\Test\TestCase\SystemConfigCodilarLayered" summary="Create Url" ticketId="MAGETWO-23022016">
+        <variation name="CreateUrlTestVariation_all_store_views" summary="Create url for main website and all store views">
+            <data name="ConfigData/data/value" xsi:type="string">Yes</data>
+            <constraint name="Codilar\LayeredNavigation\Test\Constraint\AssertUrlSuccessSaveMessage" />
+        </variation>
+    </testCase>
+</config>
