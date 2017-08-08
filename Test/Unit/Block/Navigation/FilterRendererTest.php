@@ -21,6 +21,8 @@ class FilterRendererTest extends \PHPUnit_Framework_TestCase {
     protected $_helper,$_categoryFactory,$_productCollectionFactory,$_category;
     protected $filterRendererClass;
 
+    const CATEGORY_ID = 4;
+
     public function setUp() {
 
         $this->registry = $this->getMockBuilder(\Magento\Framework\Registry::class)
@@ -57,14 +59,14 @@ class FilterRendererTest extends \PHPUnit_Framework_TestCase {
 
         $this->_category->expects($this->any())
             ->method('load')
-            ->with(4)
+            ->with(self::CATEGORY_ID)
             ->will($this->returnValue($this->_category));
 
         $this->_categoryFactory->expects($this->any())
             ->method('create')
             ->will($this->returnValue($this->_category));
 
-        $this->assertEquals('object', gettype($this->filterRendererClass->getCategory(4)));
+        $this->assertEquals('object', gettype($this->filterRendererClass->getCategory(self::CATEGORY_ID)));
     }
 
 }

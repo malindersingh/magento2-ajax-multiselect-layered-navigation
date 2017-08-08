@@ -27,6 +27,10 @@ class DataTest extends \PHPUnit_Framework_TestCase {
     protected $_url,$request,$scopeConfig;
     protected $dataClass,$category;
 
+    const SCOPE = 1;
+    const CATEGORY_ID = 4;
+    const PATH = 'http://localhost/extension';
+
     public function setUp() {
 
         $this->categoryFactory = $this->getMockBuilder(\Magento\Catalog\Model\CategoryFactory::class)
@@ -72,16 +76,16 @@ class DataTest extends \PHPUnit_Framework_TestCase {
 
         $this->scopeConfig
             ->method('getValue')
-            ->willReturn(1);
+            ->willReturn(self::SCOPE);
 
-        $this->assertEquals(1, $this->dataClass->getConfig('codilar_layered/general/enable'));
+        $this->assertEquals(self::SCOPE, $this->dataClass->getConfig('codilar_layered/general/enable'));
     }
 
     public function testGetUrl() {
 
         $this->category->expects($this->any())
             ->method('load')
-            ->with(4)
+            ->with(self::CATEGORY_ID)
             ->will($this->returnValue($this->category));
 
         $this->category->expects($this->any())
@@ -98,7 +102,7 @@ class DataTest extends \PHPUnit_Framework_TestCase {
 
         $this->_url->expects($this->once())
             ->method('getUrl')
-            ->will($this->returnValue('http://localhost/extension'));
+            ->will($this->returnValue(self::PATH));
 
         $this->assertEquals('http://localhost/extension/charms/beads.html', $this->dataClass->getUrl(4));
     }
