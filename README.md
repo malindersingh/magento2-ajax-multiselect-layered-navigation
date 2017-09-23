@@ -12,6 +12,6 @@ www.example.com/extension/product.html?filter1=6,7&filter2=1,2,3&price=600-1000
 
 Select Canonical url field as yes, if you need your url as
 
-www.example.com/extension/product/searchby/filter1-product1-product2/filter2-product4-product5-product5.html
+www.example.com/extension/product/searchby/filter1-product1-product2/filter2-product4-product5-product6.html
 
 
