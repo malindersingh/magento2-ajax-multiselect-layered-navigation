@@ -69,4 +69,50 @@ class FilterRendererTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('object', gettype($this->filterRendererClass->getCategory(self::CATEGORY_ID)));
     }
 
+//    public function testGetMinPrice() {
+//
+//        $this->_category->expects($this->any())
+//            ->method('load')
+//            ->with(self::CATEGORY_ID)
+//            ->will($this->returnValue($this->_category));
+//
+//        $this->registry->expects($this->any())
+//            ->method('registry')
+//            ->with('current_category');
+//
+//        $this->registry->expects($this->any())
+//            ->method('getId');
+//
+//        $this->_category->expects($this->any())
+//            ->method('getProductCollection');
+//
+//        $this->_category->expects($this->any())
+//            ->method('addAttributeToSelect')
+//            ->with('*');
+//
+//        $this->_category->expects($this->any())
+//            ->method('addAttributeToSelect')
+//            ->with('price');
+//
+//        $this->_category->expects($this->any())
+//            ->method('addAttributeToSort')
+//            ->withAnyParameters('price','ASC');
+//
+//        $this->_category->expects($this->any())
+//            ->method('getFirstItem');
+//
+//        $this->_category->expects($this->any())
+//            ->method('getMinPrice')
+//            ->will($this->returnValue(699));
+//
+//        $this->_categoryFactory->expects($this->any())
+//            ->method('create')
+//            ->will($this->returnValue($this->_category));
+//
+//        var_dump($this->filterRendererClass->getMinPrice());
+//
+//        $this->assertEquals('699', $this->filterRendererClass->getMinPrice());
+//
+//    }
+
 }

@@ -83,12 +83,17 @@ class DataTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetUrl() {
 
-        $this->category->expects($this->any())
+        $this->category->expects($this->at(0))
             ->method('load')
             ->with(self::CATEGORY_ID)
             ->will($this->returnValue($this->category));
 
-        $this->category->expects($this->any())
+        $this->category->expects($this->at(1))
+            ->method('load')
+            ->with(self::CATEGORY_ID)
+            ->will($this->returnValue($this->category));
+
+        $this->category->expects($this->once())
             ->method('getName')
             ->will($this->returnValue('beads'));
 
@@ -104,7 +109,7 @@ class DataTest extends \PHPUnit_Framework_TestCase {
             ->method('getUrl')
             ->will($this->returnValue(self::PATH));
 
-        $this->assertEquals('http://localhost/extension/charms/beads.html', $this->dataClass->getUrl(4));
+        $this->assertEquals('http://localhost/extension/charms/beads.html', $this->dataClass->getUrl(self::CATEGORY_ID));
     }
 
 }
